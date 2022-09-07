@@ -7,7 +7,7 @@ public class DataTypes_numbers {
         //int 32 bit range(2 billion ) short and byte are updated to int when being evaluated in an expression
         int int1=233;
         //long 64 bit range(too big to indicate )
-        long long1=232323232;
+        long long1=232323232l;//or use L
 
         System.out.println(byte1+" "+short1+" "+int1+" "+long1);
 
