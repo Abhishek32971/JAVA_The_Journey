@@ -1,4 +1,3 @@
-
 public class DataTypes_numbers {
     public static   void main(String args[]){
         //byte has storage space of 8 bits and has a range of -128 --- 127
