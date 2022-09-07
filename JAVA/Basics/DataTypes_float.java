@@ -1,3 +1,4 @@
+package Basics;
 public class DataTypes_float {
     public static void main(String args[]){
         float f1=(float) (2.33);
