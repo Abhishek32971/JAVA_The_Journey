@@ -12,6 +12,7 @@ public class nbutterfly {
             a[n - 1] = "*";
             a[i] = "*";
             a[j] = "*";
+            
             for (int k = 0; k < n; k++) {
                 if (a[k] == null) {
                     System.out.print(" ");
