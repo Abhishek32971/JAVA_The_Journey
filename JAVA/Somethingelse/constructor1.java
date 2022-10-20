@@ -13,11 +13,15 @@ class coordinate{
     }
 }
 class constructor1{
+    public static void g1(){
+        System.out.println("something");
+    }
     public static void main(String[] args)
     {
         coordinate co1=new coordinate(12,34);
         co1.displayy();
         coordinate co2=new coordinate();
         co2.displayy();
+        g1();
     }
 }
