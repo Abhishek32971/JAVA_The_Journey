@@ -1,3 +1,4 @@
+import java.util.*;
 public class AllAboutArrays {
     public static void main(String[] args) {
         int[][] arr1={ {10, 20, 30}, {15, 25, 35}, {22, 44, 66}, {33, 55, 77} };
@@ -8,5 +9,7 @@ public class AllAboutArrays {
                 System.out.println(arr1[i][j]);
             }
         }
+        int[] arr4={1,2,3};
+        System.out.println(Arrays.toString(arr4));
     }
 }
