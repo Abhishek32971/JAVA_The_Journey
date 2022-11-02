@@ -1,3 +1,4 @@
+
 import java.util.*;
 public class countPrime {
     public static boolean checkPrime(int num){
