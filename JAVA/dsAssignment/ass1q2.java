@@ -1,3 +1,4 @@
+import java.time.temporal.Temporal;
 import java.util.*;
 class Polynomial{
     class Node{
@@ -17,19 +18,11 @@ class Polynomial{
 
     Scanner sc = new Scanner(System.in);
     public void initPolynomial(int len){
-        int[] arrCoef = new int[len];
-        int[] arrPow = new int[len];
-        System.out.println("Enter the coefficient of the polynomial one by one: ");
         for(int i=0; i<len; i++){
-            arrCoef[i] = sc.nextInt();
-        }
-        
-        System.out.println("Enter the powers of variables one by one");
-        for(int i=0; i<len; i++){
-            arrPow[i] = sc.nextInt();
-        }
-        for(int i=0; i<len; i++){
-            Node newNode = new Node(arrCoef[i], arrPow[i]);
+            System.out.println("enter the coeff followed by power");
+            int coff=sc.nextInt();
+            int power=sc.nextInt();
+            Node newNode = new Node(coff,power);
             if(head == null) head = newNode;
             else{
                 Node currNode = head;
@@ -41,39 +34,75 @@ class Polynomial{
         }
     }
 
+    private void pushToPoly(int coeff, int pow){
+        Node newNode = new Node(coeff, pow);
+        if(head == null) head = newNode;
+        else{
+            Node currNode = head;
+            while(currNode.next != null){
+                currNode = currNode.next;
+            }
+            currNode.next = newNode;
+        }
+    }
+
+
     public Polynomial addPoly(Polynomial poly2){
         Polynomial result=new Polynomial();
-        for(Node tempOf1=head;temp!=null;temp=temp.next){
-            for(Node TempOf2=poly2.head;tempOf1!=null;tempOf1=tempOf1.next){
+        for(Node tempOf1=head;tempOf1!=null;tempOf1=tempOf1.next){
+            boolean foundMatch=false;
+            for(Node TempOf2=poly2.head;TempOf2!=null;TempOf2=TempOf2.next){
                 if(TempOf2.pwr==tempOf1.pwr){
                     int resultPwr=TempOf2.pwr;
                     int resultCoeff=TempOf2.cofcnt+tempOf1.cofcnt;
-                    
+                    result.pushToPoly(resultCoeff, resultPwr);
+                    foundMatch=true;
+                    break;
                 }
-
-    public void addPoly(Polynomial poly){
-        Node poly2 = poly.head;
-        Node poly1 = head;
-        Polynomial resultPoly = new Polynomial();
-        while((poly1 != null) || (poly2 != null)){
-            if(poly1.pwr > poly2.pwr){
-                resultPoly.pushToPoly(poly1.cofcnt, poly1.pwr);
-                poly1 = poly1.next;
             }
-            else if(poly2.pwr > poly1.pwr){
-                resultPoly.pushToPoly(poly2.cofcnt, poly2.pwr);
-                poly2 = poly2.next;
-            }
-            else if(poly1.pwr ==  poly2.pwr){
-                resultPoly.pushToPoly(poly1.cofcnt + poly2.cofcnt, poly1.pwr);
-                poly1 = poly1.next;
-                poly2 = poly2.next;
+            if(foundMatch==false){
+                result.pushToPoly(tempOf1.cofcnt,tempOf1.pwr);
             }
         }
-        System.out.println("Resultant Polynomial");
-        resultPoly.printPoly();
+        return result;
     }
 
+
+    public int HighestPwr(){
+        int highest=head.pwr;
+        for(Node temp=head;temp!=null;temp=temp.next){
+            if(highest<temp.pwr){
+                highest=temp.pwr;
+            }
+        }
+        return highest;
+    }
+
+    public Polynomial fixPolynomial(){
+        Polynomial fixed=new Polynomial();
+        int HigstPwr=HighestPwr();
+        for(int i=HighestPwr();i>=0;i--){
+            int sumOfCoeff=0;
+            for(Node temp=head;temp!=null;temp=temp.next){
+                if(temp.pwr==i){
+                    sumOfCoeff+=temp.cofcnt;
+                }
+            }
+            fixed.pushToPoly(sumOfCoeff,i);
+        }
+        return fixed;
+
+    }
+        
+    public char findHistDeg(Polynomial p1,Polynomial p2){
+        int p1deg=p1.HighestPwr();
+        int p2deg=p2.HighestPwr();
+        if (p1deg>p2deg){
+            return '1';
+        }
+        return '2';
+    }
+    
     public void printPoly(){
         Node currNode = head;
         while(currNode != null){
@@ -93,16 +122,28 @@ public class ass1q2{
         Polynomial poly1 = new Polynomial();
         Polynomial poly2 = new Polynomial();
         System.out.println("1st Polynomial");
-        System.out.println("Enter the degree of 1st polynomial: ");
+        System.out.println("Enter the length of 1st polynomial: ");
         int length1 = sc.nextInt();
         poly1.initPolynomial(length1);
         System.out.println("2nd Polynomial");
-        System.out.println("Enter the degree of 2nd polynomial: ");
+        System.out.println("Enter the length of 2nd polynomial: ");
         int length2 = sc.nextInt();
         poly2.initPolynomial(length2);
         poly1.printPoly();
         poly2.printPoly();
-        poly1.addPoly(poly2);
+        Polynomial poly1New=poly1.fixPolynomial();
+        Polynomial poly2New=poly2.fixPolynomial();
+
+        
+        Polynomial result;
+
+        if (poly1.findHistDeg(poly1New,poly2New)=='1'){
+        result=poly1New.addPoly(poly2New);
+        }
+        else{
+            result=poly2New.addPoly(poly1New);
+        }
+        result.printPoly();
         sc.close();
     }
 }
