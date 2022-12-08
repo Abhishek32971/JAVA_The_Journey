@@ -41,17 +41,15 @@ class Polynomial{
         }
     }
 
-    private void pushToPoly(int cofcnt, int pwr){
-        Node newNode = new Node(cofcnt, pwr);
-        if(head == null) head = newNode;
-        else{
-            Node currNode = head;
-            while(currNode.next != null){
-                currNode = currNode.next;
-            }
-            currNode.next = newNode;
-        }
-    }
+    public Polynomial addPoly(Polynomial poly2){
+        Polynomial result=new Polynomial();
+        for(Node tempOf1=head;temp!=null;temp=temp.next){
+            for(Node TempOf2=poly2.head;tempOf1!=null;tempOf1=tempOf1.next){
+                if(TempOf2.pwr==tempOf1.pwr){
+                    int resultPwr=TempOf2.pwr;
+                    int resultCoeff=TempOf2.cofcnt+tempOf1.cofcnt;
+                    
+                }
 
     public void addPoly(Polynomial poly){
         Node poly2 = poly.head;
